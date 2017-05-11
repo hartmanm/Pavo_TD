@@ -289,6 +289,9 @@ function create ()
   creep.bringToTop();
   turret.bringToTop();
 
+  newTurretClass = new TurretClass(game, 'arrow', 500, 400)
+  newTurretClass.events.onDragStop.add(createTurret, this);
+
   logo = game.add.sprite(155, 155, 'logo');
   logo.fixedToCamera = true;
   game.input.onDown.add(removeLogo, this);
@@ -577,6 +580,7 @@ if( (currentWave == 0) && (start == 1) )
       for(var f = 0; f < turretWeapons.length; f++) {
         game.physics.arcade.overlap(turretWeapons[f].bullets, theCreeps[i].creep, projectilesHitEnemy, null, this);
       }
+      game.physics.arcade.overlap(newTurretClass.turretWeapon.bullets, theCreeps[i].creep, projectilesHitEnemy, null, this);
       theCreeps[i].update();
      }
   }
@@ -596,6 +600,8 @@ if( (currentWave == 0) && (start == 1) )
       }
     }
   }
+
+  newTurretClass.updateTurret(theCreeps);
 }
 
 function rotateTurret(turret) {
